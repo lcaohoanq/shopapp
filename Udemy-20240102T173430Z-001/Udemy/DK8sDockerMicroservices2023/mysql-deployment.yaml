@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-db-service #the Service and Deployment are linked together
+  #kubectl get service mysql-db
+  #minikube service mysql-db-service --url
+  labels:
+    app: shopapp
+spec:
+  ports:
+  - port: 3306
+    targetPort: 3306
+    name: mysql
+  selector:
+    app: shopapp
+    tier: database
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: shopapp
+    tier: database
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-db-deployment  
+  labels:
+    app: shopapp
+    tier: database
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopapp
+      tier: database
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: shopapp
+        tier: database
+    spec:
+      containers:
+      - image: docker.io/mysql:8.2.0
+        name: mysql8-container
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_DATABASE
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+
+
+#kubectl get pods --watch      
+#kubectl logs mysql-deployment-58d57d7975-jhmnv
+
+#Look for any events related to the container creation process
+#kubectl describe pod mysql-db-deployment-989fc8795-pgrfj
+#kubectl get pod phpmyadmin-deployment-64f8c8ff4c-9kkgb -o jsonpath='{.status.podIP}'
+
+
+#kubectl delete pod mysql-deployment-544cd8fcfd-6ndhg
+
+#kubectl get pvc
+
+#kubectl exec -it mysql-db-deployment-989fc8795-x6f78 -- bash
+#kubectl exec -it mysql-deployment-58d57d7975-m9qbw -- mysql -u root -p
+
+

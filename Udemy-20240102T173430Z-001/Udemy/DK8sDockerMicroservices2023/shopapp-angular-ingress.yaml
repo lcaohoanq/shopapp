@@ -1,0 +1,32 @@
+#minikube addons enable ingress
+#https://docs.konghq.com/kubernetes-ingress-controller/latest/deployment/minikube/
+
+#kubectl apply -f shopapp-angular-ingress.yaml 
+#kubectl get ingress --watch
+#kubectl delete ingress shopapp-angular-ingress
+
+#kubectl get ns
+#kubectl get all -n ingress-nginx 
+#kubectl get pod -n ingress-nginx 
+
+#kubectl exec -it ingress-nginx-controller-7799c6795f-hx7wx -n ingress-nginx -- sh
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shopapp-angular-ingress
+  labels:
+    app: shopapp
+    tier: frontend
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: myapp.com
+    http:
+      paths:
+      - path: /shopapp-angular
+        pathType: Prefix
+        backend:
+          service:
+            name: shopapp-angular-service
+            port:              
+              number: 80

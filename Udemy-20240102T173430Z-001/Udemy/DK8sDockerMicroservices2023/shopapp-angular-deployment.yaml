@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopapp-angular-service
+  #kubectl get service shopapp-angular-service
+  #expose a service:
+  #minikube service shopapp-angular-service --url
+  labels:
+    app: shopapp
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: shopapp
+    tier: frontend
+  type: LoadBalancer
+      
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopapp-angular-deployment
+  labels:
+    app: shopapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: shopapp
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: shopapp
+        tier: frontend
+    spec:
+      imagePullSecrets: 
+      - name: shopapp-angular-image-secret
+      containers:
+        #must be in Docker Hub(OCR,GCR...), must authenticate
+      - image: docker.io/sunlight4d/shopapp-angular:1.0.0 
+        name: shopapp-angular-container                          
+        ports:
+        - containerPort: 80 #expose
+          name: shopapp

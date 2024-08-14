@@ -1,0 +1,52 @@
+#Khi một yêu cầu truy vấn thông tin sản phẩm được gửi đến ứng dụng của bạn, 
+#bạn có thể trước tiên kiểm tra xem dữ liệu đã được lưu trữ trong Redis chưa. 
+#Nếu đã có trong cache, bạn có thể trả về dữ liệu từ Redis mà không cần truy vấn cơ sở dữ liệu chính
+
+#Có thể sử dụng Redis để lưu trữ thông tin như token phiên, thời gian hết hạn, 
+#và thông tin người dùng liên quan. Điều này giúp xác thực và quản lý phiên người dùng một cách hiệu quả
+
+#Khi khách hàng đặt hàng, bạn có thể đưa các đơn hàng vào hàng đợi Redis để xử lý bất đồng bộ
+
+#Redis có khả năng hỗ trợ việc gửi thông báo thời gian thực cho người dùng
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis-pod
+spec:
+  containers:
+  - name: redis
+    image: docker.io/redis:7.2.3
+    command:
+      - redis-server
+      - "/redis-master/redis.conf"
+    env:
+    - name: MASTER
+      value: "true"
+    ports:
+    - containerPort: 6379
+    resources:
+      limits:
+        #10% of a single CPU core
+        cpu: "0.1"#
+    volumeMounts:
+    #the path within the container's filesystem
+    - mountPath: /redis-master-data
+      name: data
+    - mountPath: /redis-master
+      name: config
+  volumes:
+    - name: data
+      emptyDir: {}
+    - name: config
+      configMap:
+        name: redis-configmap
+        items:
+        - key: redis-config
+          #sets the path where the key-value pair will be mounted within the container.
+          path: redis.conf
+#kubectl exec -it redis-pod -- bash
+#ls -la /redis-master-data/
+#cat /redis-master/redis.conf
+#redis-cli
+#CONFIG GET port

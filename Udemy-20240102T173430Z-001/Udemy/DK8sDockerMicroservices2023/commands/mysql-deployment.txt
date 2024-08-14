@@ -1,0 +1,42 @@
+
+kubectl create deployment mysql-db-deployment \
+	--image=docker.io/mysql:8.2.0
+
+kubectl set env deployment mysql-db-deployment \
+	MYSQL_ROOT_PASSWORD=Abc123456789@ \
+	MYSQL_DATABASE=ShopApp
+
+kubectl get pods
+
+kubectl proxy
+http://localhost:8001/api/v1/namespaces/default/pods/$POD_NAME/
+
+http://localhost:8001/api/v1/namespaces/default/pods/mysql-db-deployment-587b4dbd67-l5grr
+
+
+kubectl expose deployment mysql-db-deployment \
+	--name=mysql-db-service \
+	--type="NodePort" \
+	--port=3306 \
+	--labels="app=shopapp,tier=mysql"
+
+
+kubectl get services
+
+kubectl get service mysql-db-service 
+
+kubectl describe service mysql-db-service 
+
+kubectl describe service mysql-db-service | grep NodePort 
+
+
+kubectl scale deployment mysql-db-deployment --replicas=1
+kubectl get replicaset
+
+
+kubectl delete service mysql-db-service
+
+kubectl delete deployment mysql-db-deployment	
+
+
+

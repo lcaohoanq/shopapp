@@ -1,0 +1,26 @@
+#helm repo add stable https://charts.helm.sh/stable
+
+#minikube addons enable ingress
+#kubectl apply -f shopapp-spring-ingress.yaml 
+#kubectl get ingress --watch
+#wait for ADDRESS, then modify /etc/hosts
+#kubectl delete ingress shopapp-spring-ingress
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shopapp-spring-ingress
+spec:
+  ingressClassName: kong
+  rules:
+  - host: myapp.com
+    http:
+      paths:
+      - path: /shopapp-spring-api
+        pathType: Prefix
+        backend:
+          service:
+            name: shopapp-spring-service
+            port:              
+              number: 8088
+#http://myapp.com:8088/shopapp-spring-api/api/v1/products?page=1&limit=10&keyword=wooden&category_id=4              

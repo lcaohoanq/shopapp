@@ -1,0 +1,17 @@
+kubectl create deployment shopapp-spring-deployment \
+	--image=docker.io/sunlight4d/shopapp-spring:1.0.1  
+
+kubectl set env deployment shopapp-spring-deployment \
+  'SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db-service:3306/ShopApp?serverTimezone=UTC&allowPublicKeyRetrieval=true' \
+  MYSQL_ROOT_PASSWORD=Abc123456789@
+
+kubectl expose deployment shopapp-spring-deployment \
+	--name=shopapp-spring-deployment-service \
+	--type="NodePort" \
+	--port=8088 \
+	--labels="app=shopapp,tier=backend"		
+
+minikube service shopapp-spring-deployment-service --url	
+
+#Cannot set container's name in kubectl
+kubectl set image deployments/shopapp-spring-deployment shopapp-spring-container=docker.io/sunlight4d/shopapp-spring:1.0.1  

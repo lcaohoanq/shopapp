@@ -1,0 +1,12 @@
+#composer
+resources:
+  - mysql-secret.yaml
+  - mysql-deployment.yaml
+  - phpmyadmin-deployment.yaml
+  - shopapp-spring-deployment.yaml
+  - shopapp-angular-deployment.yaml
+
+#minikube start --driver=docker
+#kubectl cluster-info
+#kubectl apply -k ./
+#kubectl delete -k ./

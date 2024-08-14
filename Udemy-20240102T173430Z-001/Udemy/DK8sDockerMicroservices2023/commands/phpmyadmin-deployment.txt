@@ -1,0 +1,20 @@
+kubectl create deployment phpmyadmin-deployment \
+	--image=docker.io/phpmyadmin/phpmyadmin
+
+kubectl set env deployment phpmyadmin-deployment \
+	PMA_HOST=mysql-db-service \
+	PMA_PORT=3306 \
+	PMA_USER=root \
+	PMA_PASSWORD=Abc123456789@
+
+kubectl expose deployment phpmyadmin-deployment \
+	--name=phpmyadmin-service \
+	--type="NodePort" \
+	--port=80 \
+	--labels="app=shopapp,tier=backend"	
+
+kubectl describe service phpmyadmin-service | grep NodePort 
+
+kubectl scale deployment phpmyadmin-deployment --replicas=3
+
+minikube service phpmyadmin-service --url	

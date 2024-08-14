@@ -1,0 +1,70 @@
+# SOURCE: https://cloud.google.com/kubernetes-engine/docs/tutorials/guestbook
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: shopapp    
+    tier: backend
+spec:
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: shopapp    
+    tier: backend
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: shopapp    
+    tier: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopapp
+  template:
+    metadata:
+      labels:
+        app: shopapp        
+        tier: backend
+    spec:
+      containers:
+      - name: redis-container
+        image: docker.io/redis:7.2.3        
+        resources:
+          limits:            
+            cpu: "0.2"
+          requests:
+            #Sets the CPU request to 100m (100 milliCPU or 0.1 CPU)
+            cpu: 100m
+            #the container requires at least 100Mi of memory to run
+            memory: 100Mi
+        volumeMounts:
+        #the path within the container's filesystem
+        - mountPath: /redis-master-data
+          name: data
+        - mountPath: /redis-master
+          name: config    
+        ports:
+        - containerPort: 6379
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: redis-configmap
+            items:
+            - key: redis-config
+              #sets the path where the key-value pair will be mounted within the container.
+              path: redis.conf
+
+#kubectl exec -it redis-pod -- bash
+#ls -la /redis-master-data/
+#cat /redis-master/redis.conf
+#redis-cli
+#CONFIG GET port              

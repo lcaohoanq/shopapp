@@ -1,0 +1,17 @@
+-Install minikube(Windows, MacOS)
+Minikube defaults to 2048MB of memory and 2 CPU
+minikube start --driver=docker --memory 5120 --cpus=4
+
+minikube addons enable metrics-server
+minikube dashboard
+minikube addons list
+
+
+minikube logs
+minikube status
+kubectl version
+
+
+minikube stop
+minikube delete
+

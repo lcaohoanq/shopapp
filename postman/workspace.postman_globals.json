@@ -1,0 +1,50 @@
+{
+	"id": "7ad4cf54-b547-4743-86f1-209ed6f93ccb",
+	"values": [
+		{
+			"key": "OPENAI_KEY",
+			"value": "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",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "local",
+			"value": "localhost:8086",
+			"enabled": true
+		},
+		{
+			"key": "API_PREFIX",
+			"value": "localhost:8088/api/v1/",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "API_PREFIX",
+			"value": "http://45.117.179.16:8099/api/v1/",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "API_PREFIX",
+			"value": "localhost:8099/api/v1/",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "API_PREFIX",
+			"value": "http://127.0.0.1:53485/api/v1/",
+			"type": "default",
+			"enabled": false
+		},
+		{
+			"key": "API_PREFIX",
+			"value": "localhost:8088/api/v1/",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2023-11-16T03:13:07.107Z",
+	"_postman_exported_using": "Postman/10.20.0"
+}
