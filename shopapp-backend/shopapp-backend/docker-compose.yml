@@ -1,0 +1,13 @@
+services:
+  db:
+    image: lcaohoanq/shopapp:1.0
+    container_name: ShopApp-SPB-Angular
+    ports:
+      - "3309:3306"
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
