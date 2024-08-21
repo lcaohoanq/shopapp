@@ -26,7 +26,7 @@ import { CouponService } from '../../services/coupon.service';
     FooterComponent,
     HeaderComponent,
     CommonModule,
-    FormsModule,    
+    FormsModule,
     ReactiveFormsModule,
   ]
 })
@@ -48,7 +48,7 @@ export class OrderComponent implements OnInit{
   orderData: OrderDTO = {
     user_id: 0, // Thay bằng user_id thích hợp
     fullname: '', // Khởi tạo rỗng, sẽ được điền từ form
-    email: '', // Khởi tạo rỗng, sẽ được điền từ form    
+    email: '', // Khởi tạo rỗng, sẽ được điền từ form
     phone_number: '', // Khởi tạo rỗng, sẽ được điền từ form
     address: '', // Khởi tạo rỗng, sẽ được điền từ form
     status: 'pending',
@@ -63,7 +63,7 @@ export class OrderComponent implements OnInit{
   constructor() {
     // Tạo FormGroup và các FormControl tương ứng
     this.orderForm = this.formBuilder.group({
-      fullname: ['', Validators.required], // fullname là FormControl bắt buộc      
+      fullname: ['', Validators.required], // fullname là FormControl bắt buộc
       email: ['', [Validators.email]], // Sử dụng Validators.email cho kiểm tra định dạng email
       phone_number: ['', [Validators.required, Validators.minLength(6)]], // phone_number bắt buộc và ít nhất 6 ký tự
       address: ['', [Validators.required, Validators.minLength(5)]], // address bắt buộc và ít nhất 5 ký tự
@@ -73,23 +73,23 @@ export class OrderComponent implements OnInit{
       payment_method: ['cod']
     });
   }
-  
-  ngOnInit(): void {  
+
+  ngOnInit(): void {
     debugger
     //this.cartService.clearCart();
-    this.orderData.user_id = this.tokenService.getUserId();    
+    this.orderData.user_id = this.tokenService.getUserId();
     // Lấy danh sách sản phẩm từ giỏ hàng
     debugger
     this.cart = this.cartService.getCart();
-    const productIds = Array.from(this.cart.keys()); // Chuyển danh sách ID từ Map giỏ hàng    
+    const productIds = Array.from(this.cart.keys()); // Chuyển danh sách ID từ Map giỏ hàng
 
     // Gọi service để lấy thông tin sản phẩm dựa trên danh sách ID
-    debugger    
+    debugger
     if(productIds.length === 0) {
       return;
-    }    
+    }
     this.productService.getProductsByIds(productIds).subscribe({
-      next: (products) => {            
+      next: (products) => {
         debugger
         // Lấy thông tin sản phẩm và số lượng từ danh sách sản phẩm và giỏ hàng
         this.cartItems = productIds.map((productId) => {
@@ -97,7 +97,7 @@ export class OrderComponent implements OnInit{
           const product = products.find((p) => p.id === productId);
           if (product) {
             product.thumbnail = `${environment.apiBaseUrl}/products/images/${product.thumbnail}`;
-          }          
+          }
           return {
             product: product!,
             quantity: this.cart.get(productId)!
@@ -113,7 +113,7 @@ export class OrderComponent implements OnInit{
         debugger;
         console.error('Error fetching detail:', error);
       }
-    });        
+    });
   }
   placeOrder() {
     debugger
@@ -141,7 +141,7 @@ export class OrderComponent implements OnInit{
       // Dữ liệu hợp lệ, bạn có thể gửi đơn hàng đi
       this.orderService.placeOrder(this.orderData).subscribe({
         next: (response:Order) => {
-          debugger;          
+          debugger;
           alert('Đặt hàng thành công');
           this.cartService.clearCart();
           this.router.navigate(['/']);
@@ -152,15 +152,15 @@ export class OrderComponent implements OnInit{
         },
         error: (error: any) => {
           debugger;
-          alert(`Lỗi khi đặt hàng: ${error}`);
+          alert(`Lỗi khi đặt hàng: ${error.error.message}`);
         },
       });
     } else {
       // Hiển thị thông báo lỗi hoặc xử lý khác
       alert('Dữ liệu không hợp lệ. Vui lòng kiểm tra lại.');
-    }        
+    }
   }
-    
+
   decreaseQuantity(index: number): void {
     if (this.cartItems[index].quantity > 1) {
       this.cartItems[index].quantity--;
@@ -169,14 +169,14 @@ export class OrderComponent implements OnInit{
       this.calculateTotal();
     }
   }
-  
+
   increaseQuantity(index: number): void {
-    this.cartItems[index].quantity++;   
+    this.cartItems[index].quantity++;
     // Cập nhật lại this.cart từ this.cartItems
     this.updateCartFromCartItems();
     this.calculateTotal();
-  }    
-  
+  }
+
   // Hàm tính tổng tiền
   calculateTotal(): void {
       this.totalAmount = this.cartItems.reduce(
