@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
@@ -47,20 +48,24 @@ public class ProductController {
                     .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
-            MultipartFile file = productDTO.getFile();
-            if (file != null) {
-                if (file.getSize() > 10 * 1024 * 1024) {
-                    //throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE, "File size must be less than 10MB");
-                    return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                        .body("File size must be less than 10MB");
+            List<MultipartFile> files = productDTO.getFiles();
+            files= files == null ? new ArrayList<MultipartFile>() : files;
+            for(MultipartFile file: files){
+                if (file != null) {
+                    if (file.getSize() > 10 * 1024 * 1024) {
+                        //throw new ResponseStatusException(HttpStatus.PAYLOAD_TOO_LARGE, "File size must be less than 10MB");
+                        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
+                            .body("File size must be less than 10MB");
+                    }
+                    String contentType = file.getContentType(); //check if the file is image
+                    if (contentType == null || !contentType.startsWith("image/")) {
+                        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+                            .body("File must be an image");
+                    }
+                    //Store file
+                    String fileName = storeFile(file);
+                    //save to product_images later
                 }
-                String contentType = file.getContentType(); //check if the file is image
-                if (contentType == null || !contentType.startsWith("image/")) {
-                    return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-                        .body("File must be an image");
-                }
-                //Store file
-                String fileName = storeFile(file);
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
