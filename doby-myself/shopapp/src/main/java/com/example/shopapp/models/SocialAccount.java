@@ -26,17 +26,17 @@ public class SocialAccount {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "provider", columnDefinition = "VARCHAR(20)")
+    @Column(name = "provider", nullable = false, length = 20)
     private String provider;
 
-    @Column(name = "provider_id", columnDefinition = "VARCHAR(50)")
+    @Column(name = "provider_id", nullable = false, length = 50)
     private String providerId;
 
-    @Column(name = "email", columnDefinition = "VARCHAR(50)")
-    private String email;
-
-    @Column(name = "name", columnDefinition = "VARCHAR(100)")
+    @Column(name = "name", length = 150)
     private String name;
+
+    @Column(name = "email", length = 150)
+    private String email;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

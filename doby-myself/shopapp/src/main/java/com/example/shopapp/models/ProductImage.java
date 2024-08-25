@@ -27,7 +27,7 @@ public class ProductImage {
     @Column(name="product_id", columnDefinition = "INT(11)")
     private int productId;
 
-    @Column(name="image_url", columnDefinition = "VARCHAR(300)")
+    @Column(name="image_url", length = 300)
     private String imageUrl;
 
 }

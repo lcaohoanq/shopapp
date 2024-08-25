@@ -27,10 +27,10 @@ public class Token {
     @Column(name = "id")
     private Long id;
 
-    @Column(name="token", columnDefinition = "VARCHAR(50)")
+    @Column(name="token",  length = 255)
     private String token;
 
-    @Column(name="token_type", columnDefinition = "VARCHAR(50)")
+    @Column(name="token_type", length = 50)
     private String tokenType;
 
     @Column(name="expiration_date")

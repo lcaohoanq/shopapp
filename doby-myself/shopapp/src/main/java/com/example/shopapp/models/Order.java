@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,13 +34,13 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @Column(name="full_name", columnDefinition = "VARCHAR(100)")
+    @Column(name="fullname", columnDefinition = "VARCHAR(100)")
     private String fullName;
 
     @Column(name="email", columnDefinition = "VARCHAR(100)")
     private String email;
 
-    @Column(name="phone_number", columnDefinition = "VARCHAR(20)")
+    @Column(name="phone_number", nullable = false, columnDefinition = "VARCHAR(20)")
     private String phoneNumber;
 
     @Column(name="address", columnDefinition = "VARCHAR(200)")
@@ -65,7 +66,7 @@ public class Order {
     private String shippingAddress;
 
     @Column(name="shipping_date")
-    private LocalDateTime shippingDate;
+    private Date shippingDate;
 
     @Column(name="tracking_number", columnDefinition = "VARCHAR(100)")
     private String trackingNumber;
@@ -73,6 +74,6 @@ public class Order {
     @Column(name="payment_method", columnDefinition = "VARCHAR(100)")
     private String paymentMethod;
 
-    @Column(name="is_active", columnDefinition = "TINYINT(1)")
-    private int isActive;
+    @Column(name="active", columnDefinition = "TINYINT(1)")
+    private Boolean isActive;
 }
