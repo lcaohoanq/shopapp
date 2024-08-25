@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.Set;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +20,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "categories")
 @Entity
+@Builder
 public class Category {
 
     @Id
@@ -28,7 +30,7 @@ public class Category {
     @Column(name = "name", nullable = false) //column name in the database cannot be null
     private String name;
 
-    @OneToMany(mappedBy = "categoryId")
-    private Set<Product> products;
+//    @OneToMany(mappedBy = "category")
+//    private Set<Product> products;
 
 }

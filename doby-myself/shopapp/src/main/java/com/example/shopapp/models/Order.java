@@ -13,6 +13,7 @@ import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +24,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "orders")
 @Entity
+@Builder
 public class Order {
 
     @Id
@@ -32,7 +34,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User userId;
+    private User user;
 
     @Column(name="fullname", columnDefinition = "VARCHAR(100)")
     private String fullName;
