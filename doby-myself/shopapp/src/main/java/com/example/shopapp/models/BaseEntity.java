@@ -1,6 +1,7 @@
 package com.example.shopapp.models;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperclass //avoid direct persistence of this class, any entity that extends this class will have these fields
 public class BaseEntity {
 
     @Column(name="created_at")
