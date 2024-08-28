@@ -26,8 +26,10 @@ public class ProductDTO {
     private String description;
     //created at and updated at auto generated
     @JsonProperty("category_id")
-    private int categoryId;
+    private Long categoryId;
 
-    private List<MultipartFile> files;
+    //remove this field to include in the @ModelAttribute in the request
+    //we send from 2 resources (form-data and json)
+    //private List<MultipartFile> files;
 
 }
