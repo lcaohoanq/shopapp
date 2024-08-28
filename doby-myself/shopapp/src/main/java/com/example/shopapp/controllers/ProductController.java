@@ -5,6 +5,8 @@ import com.example.shopapp.dtos.ProductDTO;
 import com.example.shopapp.dtos.ProductImageDTO;
 import com.example.shopapp.models.Product;
 import com.example.shopapp.models.ProductImage;
+import com.example.shopapp.responses.ProductListResponse;
+import com.example.shopapp.responses.ProductResponse;
 import com.example.shopapp.services.IProductService;
 import jakarta.validation.Valid;
 import java.io.File;
@@ -18,6 +20,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -77,11 +82,11 @@ public class ProductController {
         try {
             Product existingProduct = productService.getProductById(productId);
             files = files == null ? new ArrayList<MultipartFile>() : files;
-            if(files.size() > ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
+            if (files.size() > ProductImage.MAXIMUM_IMAGES_PER_PRODUCT) {
                 return ResponseEntity.badRequest().body(
                     ErrorMessage.MAXIMUM_IMAGES_PER_PRODUCT
-                + ProductImage.MAXIMUM_IMAGES_PER_PRODUCT
-                + " found: " + files.size());
+                        + ProductImage.MAXIMUM_IMAGES_PER_PRODUCT
+                        + " found: " + files.size());
             }
             List<ProductImage> productImages = new ArrayList<>();
             for (MultipartFile file : files) {
@@ -115,13 +120,13 @@ public class ProductController {
         }
     }
 
-    private boolean isImageFile(MultipartFile file){
+    private boolean isImageFile(MultipartFile file) {
         String contentType = file.getContentType();
         return contentType != null && contentType.startsWith("image/");
     }
 
     private String storeFile(MultipartFile file) throws IOException {
-        if(!isImageFile(file) || file.getOriginalFilename() == null){
+        if (!isImageFile(file) || file.getOriginalFilename() == null) {
             throw new IOException("Invalid image format");
         }
         String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
@@ -138,11 +143,22 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<String> getProducts(
+    public ResponseEntity<ProductListResponse> getProducts(
         @RequestParam("page") int page,
         @RequestParam("limit") int limit
     ) {
-        return ResponseEntity.ok(String.format("Products page: %d, limit: %d", page, limit));
+
+        //Tao Pageable tu page va limit
+        PageRequest pageRequest = PageRequest.of(
+            page, limit,
+            Sort.by("createdAt").descending());
+        Page<ProductResponse> productPage = productService.getAllProducts(pageRequest);
+        int totalPages = productPage.getTotalPages(); //manually, we can calculate the total pages by: totalProducts/limit
+        List<ProductResponse> products =  productPage.getContent();
+        return ResponseEntity.ok(ProductListResponse.builder()
+                .products(products)
+                .totalPages(totalPages)
+            .build());
     }
 
     //localhost:8080/api/v1/products/5
