@@ -27,10 +27,10 @@ public class OrderController {
 
     @PostMapping("")
     public ResponseEntity<?> createOder(
-            @RequestBody @Valid OrderDTO orderDTO,
-            BindingResult result){
-        try{
-            if(result.hasErrors()){
+        @RequestBody @Valid OrderDTO orderDTO,
+        BindingResult result) {
+        try {
+            if (result.hasErrors()) {
                 List<FieldError> fieldErrorList = result.getFieldErrors();
                 List<String> errorMessages = fieldErrorList
                     .stream()
@@ -40,7 +40,7 @@ public class OrderController {
             }
             Order orderResponse = orderService.createOrder(orderDTO);
             return ResponseEntity.ok(orderResponse);
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.status(500).body("An error occurred while creating the order");
         }
     }
@@ -66,11 +66,22 @@ public class OrderController {
             return ResponseEntity.ok("User with id: " + id);
         }
     */
-    @GetMapping("/{user_id}")
-    public ResponseEntity<?> getOrderByUserId(@Valid @PathVariable("user_id") Long userId){
-        try{
-            return ResponseEntity.ok("Orders for user with id: "+userId);
-        }catch (Exception e){
+    @GetMapping("/user/{user_id}")
+    public ResponseEntity<?> getOrderByUserId(@Valid @PathVariable("user_id") Long userId) {
+        try {
+            List<Order> orders = orderService.findByUserId(userId);
+            return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("An error occurred while fetching the orders");
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getOrder(@Valid @PathVariable("id") Long orderId) {
+        try {
+            Order existingOrder = orderService.getOrder(orderId);
+            return ResponseEntity.ok(existingOrder);
+        } catch (Exception e) {
             return ResponseEntity.status(500).body("An error occurred while fetching the orders");
         }
     }
@@ -79,20 +90,22 @@ public class OrderController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateOrder(
         @Valid @PathVariable Long id,
-        @Valid @RequestBody OrderDTO orderDTO){
-        try{
-            return ResponseEntity.ok("Order with id: "+id+" updated successfully");
-        }catch (Exception e){
+        @Valid @RequestBody OrderDTO orderDTO) {
+        try {
+            Order order = orderService.updateOrder(id, orderDTO);
+            return ResponseEntity.ok(order);
+        } catch (Exception e) {
             return ResponseEntity.status(500).body("An error occurred while updating the order");
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteOrder(@Valid @PathVariable Long id){
+    public ResponseEntity<?> deleteOrder(@Valid @PathVariable Long id) {
         //xoa mem, update truong active = false
-        try{
-            return ResponseEntity.ok("Order with id: "+id+" deleted successfully");
-        }catch (Exception e){
+        try {
+            orderService.deleteOrder(id);
+            return ResponseEntity.ok("Order with id: " + id + " deleted successfully");
+        } catch (Exception e) {
             return ResponseEntity.status(500).body("An error occurred while deleting the order");
         }
     }
