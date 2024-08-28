@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -52,10 +53,10 @@ public class Order {
     private String note;
 
     @Column(name="order_date")
-    private LocalDateTime orderDate;
+    private Date orderDate;
 
-    @Enumerated
-    private Status status;
+    @Column(name = "status")
+    private String status;
 
     @Column(name="total_money")
     @Min(value = 0, message = "Total money must be >= 0")
@@ -68,7 +69,7 @@ public class Order {
     private String shippingAddress;
 
     @Column(name="shipping_date")
-    private Date shippingDate;
+    private LocalDate shippingDate;
 
     @Column(name="tracking_number", columnDefinition = "VARCHAR(100)")
     private String trackingNumber;
