@@ -2,6 +2,7 @@ package com.example.shopapp.controllers;
 
 import com.example.shopapp.dtos.UserDTO;
 import com.example.shopapp.dtos.UserLoginDTO;
+import com.example.shopapp.models.User;
 import com.example.shopapp.services.IUserService;
 import com.example.shopapp.services.UserService;
 import jakarta.validation.Valid;
@@ -38,22 +39,27 @@ public class UserController {
                 return ResponseEntity.badRequest().body(errorMessages);
             }
 
-            if(!userDTO.getPassword().equals(userDTO.getRetypePassword())){
-                return  ResponseEntity.badRequest().body("Password and Retype Password must be the same");
-            };
-            userService.createUser(userDTO);
-            return ResponseEntity.ok("Register Success");
+            if (!userDTO.getPassword().equals(userDTO.getRetypePassword())) {
+                return ResponseEntity.badRequest()
+                    .body("Password and Retype Password must be the same");
+            }
+            ;
+            User user = userService.createUser(userDTO);
+            return ResponseEntity.ok(user);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error");
+            return ResponseEntity.badRequest().body("Phone number already in use");
         }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody UserLoginDTO userDTO) {
-
-        String token = userService.login(userDTO.getPhoneNumber(), userDTO.getPassword());
-
-        return ResponseEntity.ok("Some token");
+        String token;
+        try {
+            token = userService.login(userDTO.getPhoneNumber(), userDTO.getPassword());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(token);
     }
 
 

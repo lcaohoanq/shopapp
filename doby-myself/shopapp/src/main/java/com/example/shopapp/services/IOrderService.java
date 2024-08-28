@@ -1,7 +1,7 @@
 package com.example.shopapp.services;
 
 import com.example.shopapp.dtos.OrderDTO;
-import com.example.shopapp.exception.DataNotFoundException;
+import com.example.shopapp.exceptions.DataNotFoundException;
 import com.example.shopapp.models.Order;
 import java.util.List;
 

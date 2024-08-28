@@ -1,14 +1,19 @@
 package com.example.shopapp.services;
 
+import com.example.shopapp.components.JwtTokenUtils;
 import com.example.shopapp.dtos.UserDTO;
-import com.example.shopapp.exception.DataNotFoundException;
+import com.example.shopapp.exceptions.DataNotFoundException;
 import com.example.shopapp.models.Role;
 import com.example.shopapp.models.User;
 import com.example.shopapp.repositories.RoleRepository;
 import com.example.shopapp.repositories.UserRepository;
+import java.util.Optional;
+import javax.swing.text.html.Option;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +24,8 @@ public class UserService implements IUserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenUtils jwtTokenUtil;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public User createUser(UserDTO userDTO) throws DataNotFoundException {
@@ -51,8 +58,20 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public String login(String phoneNumber, String password) {
-        //Spring Security will handle this
-        return null;
+    public String login(String phoneNumber, String password) throws Exception {
+        Optional<User> optionalUser = userRepository.findByPhoneNumber(phoneNumber);
+        if(optionalUser.isEmpty()){
+            throw new DataNotFoundException("User not found");
+        }
+        User existingUser = optionalUser.get();
+        if(existingUser.getFacebookAccountId() == 0 && existingUser.getGoogleAccountId() == 0){
+            if(!passwordEncoder.matches(password, existingUser.getPassword())){
+                throw new BadCredentialsException("Invalid password");
+            }
+        }
+        UsernamePasswordAuthenticationToken authenticationToken =
+            new UsernamePasswordAuthenticationToken(phoneNumber, password,existingUser.getAuthorities());
+        authenticationManager.authenticate(authenticationToken);
+        return jwtTokenUtil.generateToken(existingUser);
     }
 }

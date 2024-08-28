@@ -1,4 +1,4 @@
-package com.example.shopapp.exception;
+package com.example.shopapp.exceptions;
 
 public class InvalidParamException extends Exception {
 

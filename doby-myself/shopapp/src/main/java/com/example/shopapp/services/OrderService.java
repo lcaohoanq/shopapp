@@ -1,7 +1,7 @@
 package com.example.shopapp.services;
 
 import com.example.shopapp.dtos.OrderDTO;
-import com.example.shopapp.exception.DataNotFoundException;
+import com.example.shopapp.exceptions.DataNotFoundException;
 import com.example.shopapp.models.Order;
 import com.example.shopapp.models.OrderStatus;
 import com.example.shopapp.models.User;
@@ -10,7 +10,6 @@ import com.example.shopapp.repositories.UserRepository;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
