@@ -28,7 +28,7 @@ public class UserController {
     @PostMapping("/register")
     public ResponseEntity<?> createUser(
         @Valid @RequestBody UserDTO userDTO,
-        BindingResult result) {
+        BindingResult result) throws Exception {
         try {
             if (result.hasErrors()) {
                 List<FieldError> fieldErrorList = result.getFieldErrors();
@@ -47,7 +47,7 @@ public class UserController {
             User user = userService.createUser(userDTO);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Phone number already in use");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

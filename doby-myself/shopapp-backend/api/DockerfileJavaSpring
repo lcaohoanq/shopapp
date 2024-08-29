@@ -1,0 +1,668 @@
+{
+	"info": {
+		"_postman_id": "929daf19-e95b-4e3c-945d-2eaa6ed004a4",
+		"name": "doby-myself",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30118040"
+	},
+	"item": [
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "{{API_PREFIX}}/categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}/categories?page=1&limit=10",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/categories",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Sach giao khoa\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/categories",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/categories/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Do dien tu 123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/categories/2",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/categories/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}/categories/8",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"categories",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "{{API_PREFIX}}/products?page=&limit=",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}/products?page=2&limit=5",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/products/4",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}/products/5782",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"products",
+								"5782"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Truyen tranh Doraemon\",\n    \"price\": 100.56,\n    \"description\": \"Test upload product\",\n    \"category_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/products",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/products/uploads/{id}",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/media/MULTIMEDIA/graphics/wallpaper/wp2660135-windows-95-wallpaper-hd.jpg",
+										"/media/MULTIMEDIA/graphics/wallpaper/wallhaven-vgzyp8.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/products/uploads/5781",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"products",
+								"uploads",
+								"5781"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/products",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v1/categories",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/products",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}/products/5783",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"products",
+								"5783"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/products/generateFakeProducts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{API_PREFIX}}/products/generateFakeProducts",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"products",
+								"generateFakeProducts"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "{{API_PREFIX}}/users/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"fullname\": \"Tai khoan admin 1\",\n    \"phone_number\": \"1231231231\",\n    \"address\": \"Day la admin nhoe\",\n    \"password\": \"123456\",\n    \"retype_password\": \"123456\",\n    \"date_of_birth\": \"1979-10-13\",\n    \"facebook_account_id\": 0,\n    \"google_account_id\": 0,\n    \"role_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/users/register",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/users/login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5MzQxNjI1NjEiLCJ1c2VySWQiOjEwLCJzdWIiOiIwOTM0MTYyNTYxIiwiZXhwIjoxNzI3NDg1MzI5fQ.r1H7d9cRqiduZ1RuKoEuT-hueyYO8hQlN1LK5YIJAZM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"phone_number\": \"0934162561\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/users/login",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "{{API_PREFIX}}/orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5MzQxNjI1NjEiLCJ1c2VySWQiOjEwLCJzdWIiOiIwOTM0MTYyNTYxIiwiZXhwIjoxNzI3NDg4MjIzfQ.KCJROGIH9Yy6becBGrovhZb-hRw_dT4my8479YSVQf4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 8,\n    \"fullname\": \"Nguyen Duc Hoang-user\",\n    \"email\": null,\n    \"phone_number\": \"0964896239\",\n    \"address\": \"Bach mai, hanoi, vietnam\",\n    \"note\": \"Hang de vo, xin can than\",\n    \"total_money\": 123.45,\n    \"shipping_method\": \"Express\",\n    \"shipping_addresss\": \"1970-10-24\",\n    \"payment_method\": \"cod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders/user/{user_id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"fullname\": \"Luu Cao Hoang\",\n    \"email\": \"hoangclw@gmail.com\",\n    \"phone_number\": \"0934162561\",\n    \"address\": \"Nha a ngo b\",\n    \"note\": \"Hang de vo, xin can than\",\n    \"total_money\": 123.45,\n    \"shipping_method\": \"Express\",\n    \"shipping_addresss\": \"1970-10-24\",\n    \"payment_method\": \"cod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders/user/8",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders",
+								"user",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders/{id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"fullname\": \"Luu Cao Hoang\",\n    \"email\": \"hoangclw@gmail.com\",\n    \"phone_number\": \"0934162561\",\n    \"address\": \"Nha a ngo b\",\n    \"note\": \"Hang de vo, xin can than\",\n    \"total_money\": 123.45,\n    \"shipping_method\": \"Express\",\n    \"shipping_addresss\": \"1970-10-24\",\n    \"payment_method\": \"cod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders/30",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders",
+								"30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5MzQxNjI1NjEiLCJ1c2VySWQiOjEwLCJzdWIiOiIwOTM0MTYyNTYxIiwiZXhwIjoxNzI3NDg3MTQwfQ.tc5mc8EN5M-uEUzUQfMTJiBdq9d_PQbWCrqVtNfiERw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 8,\n    \"fullname\": \"Nguyen Duc Hoang-user\",\n    \"email\": null,\n    \"phone_number\": \"0964896239\",\n    \"address\": \"Nha a ngo b\",\n    \"note\": \"Hang de vo, xin can than\",\n    \"total_money\": 123.45,\n    \"shipping_method\": \"Shoppee Express\",\n    \"shipping_addresss\": \"1970-10-24\",\n    \"shipping_date\": \"2024-10-25\",\n    \"payment_method\": \"cod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders/47",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders",
+								"47"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders/{id}",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJwaG9uZU51bWJlciI6IjA5MzQxNjI1NjEiLCJ1c2VySWQiOjEwLCJzdWIiOiIwOTM0MTYyNTYxIiwiZXhwIjoxNzI3NDg4MzQyfQ.SFKiDxwxE9SoduU1PWb_iEDJz2zljOdNttURjUDTTU4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"fullname\": \"Luu Cao Hoang\",\n    \"email\": \"hoangclw@gmail.com\",\n    \"phone_number\": \"0934162561\",\n    \"address\": \"Nha a ngo b\",\n    \"note\": \"Hang de vo, xin can than\",\n    \"total_money\": 123.45,\n    \"shipping_method\": \"Express\",\n    \"shipping_addresss\": \"1970-10-24\",\n    \"payment_method\": \"cod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders/53",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders",
+								"53"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order_details",
+			"item": [
+				{
+					"name": "{{API_PREFIX}}/orders_details",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": 47,\n    \"product_id\": 1,\n    \"price\": \"123456\",\n    \"number_of_products\": \"12345\",\n    \"total_money\": \"99999\",\n    \"color\": \"#FFFFFF\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders_details",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders_details"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders_details/{id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders_details/15",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders_details",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders_details/order/{order_id}",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"fullname\": \"Luu Cao Hoang\",\n    \"email\": \"hoangclw@gmail.com\",\n    \"phone_number\": \"0934162561\",\n    \"address\": \"Nha a ngo b\",\n    \"note\": \"Hang de vo, xin can than\",\n    \"total_money\": 123.45,\n    \"shipping_method\": \"Express\",\n    \"shipping_addresss\": \"1970-10-24\",\n    \"payment_method\": \"cod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders_details/order/15",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders_details",
+								"order",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders_details/{id}",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"order_id\": 2,\n    \"product_id\": \"1\",\n    \"price\": \"123456\",\n    \"number_of_products\": \"12345\",\n    \"total_money\": \"99999\",\n    \"color\": \"#FFFFFF\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders_details/4",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders_details",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "{{API_PREFIX}}/orders/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"fullname\": \"Luu Cao Hoang\",\n    \"email\": \"hoangclw@gmail.com\",\n    \"phone_number\": \"0934162561\",\n    \"address\": \"Nha a ngo b\",\n    \"note\": \"Hang de vo, xin can than\",\n    \"total_money\": 123.45,\n    \"shipping_method\": \"Express\",\n    \"shipping_addresss\": \"1970-10-24\",\n    \"payment_method\": \"cod\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PREFIX}}/orders_details/76",
+							"host": [
+								"{{API_PREFIX}}"
+							],
+							"path": [
+								"orders_details",
+								"76"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
