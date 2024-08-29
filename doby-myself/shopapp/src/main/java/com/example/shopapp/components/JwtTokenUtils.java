@@ -94,7 +94,12 @@ public class JwtTokenUtils {
     public String extractPhoneNumber(String token) {
         return extractClaim(token, Claims::getSubject);
     }
-//    public boolean validateToken(String token, User userDetails) {
+    public boolean validateToken(String token, User userDetails) {
+
+        String phoneNumber = extractPhoneNumber(token);
+        return (phoneNumber.equals(userDetails.getPhoneNumber()))
+                && !isTokenExpired(token);
+
 //        try {
 //            String phoneNumber = extractPhoneNumber(token);
 //            Token existingToken = tokenRepository.findByToken(token);
@@ -115,7 +120,6 @@ public class JwtTokenUtils {
 //        } catch (IllegalArgumentException e) {
 //            logger.error("JWT claims string is empty: {}", e.getMessage());
 //        }
-//
 //        return false;
-//    }
+    }
 }
