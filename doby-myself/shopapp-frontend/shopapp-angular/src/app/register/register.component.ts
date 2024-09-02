@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {NgForm} from "@angular/forms";
 //dung de goi request
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {UserService} from "../service/user.service";
+import {RegisterDTO} from "../dtos/register.dto";
 
 @Component({
   selector: 'app-register',
@@ -23,13 +25,13 @@ export class RegisterComponent implements AfterViewInit {
   isAccepted: boolean;
   dob: Date;
 
-  constructor(private router: Router, private http: HttpClient) {
-    this.phone = '0552234124';
-    this.password = '12345';
-    this.retypePassword = '12345';
-    this.address = 'Da Nang City';
-    this.fullName = 'Nguyen Ky Vy';
-    this.isAccepted = true;
+  constructor(private router: Router, private userService: UserService) {
+    this.phone = '';
+    this.password = '';
+    this.retypePassword = '';
+    this.address = '';
+    this.fullName = '';
+    this.isAccepted = false;
     this.dob = new Date();
     this.dob.setFullYear(this.dob.getFullYear() - 18); // Mac dinh ngay sinh la 18 tuoi
   }
@@ -51,9 +53,9 @@ export class RegisterComponent implements AfterViewInit {
     date of birth: ${this.dob}
     `;
 
-    const apiUrl = 'http://localhost:8080/api/v1/users/register'
 
-    const registerData = {
+
+    const registerDTO: RegisterDTO = {
       "fullname": this.fullName,
       "phone_number": this.phone,
       "address": this.address,
@@ -65,27 +67,23 @@ export class RegisterComponent implements AfterViewInit {
       "role_id": 1
     }
 
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    this.http.post(apiUrl, registerData, {headers: headers}).subscribe(
-      {
-        next: (response: any)=>{
-          //xu li key qua tra ve khi user dang ky thanh cong
-          if(response && response.status === 200 || response.status === 201){
-            this.router.navigate(['/login']);
-          }else{
-            //xu li key qua tra ve khi user dang ky that bai, neu can
-          }
-        },
-        complete: ()=>{
-          alert("Register success");
-        },
-        error: (error)=>{
-          //xu li loi khi call api that bai
-          alert("Cannot register: " + error.error);
+    this.userService.register(registerDTO).subscribe({
+      next: (response: any)=>{
+        //xu li key qua tra ve khi user dang ky thanh cong
+        if(response && response.status === 200 || response.status === 201){
+          this.router.navigate(['/login']);
+        }else{
+          //xu li key qua tra ve khi user dang ky that bai, neu can
         }
+      },
+      complete: ()=>{
+        alert("Register success");
+      },
+      error: (error)=>{
+        //xu li loi khi call api that bai
+        alert("Cannot register: " + error.error);
       }
-
-    );
+    });
   }
 
   checkPasswordMatch() {
