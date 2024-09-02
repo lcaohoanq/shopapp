@@ -10,6 +10,8 @@ import {OrderCofirmComponent} from './order-cofirm/order-cofirm.component';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {RouterModule} from "@angular/router";
 
 // import { AppComponent } from './app.component';
 
@@ -27,7 +29,9 @@ import {FormsModule} from "@angular/forms";
   imports: [
     FormsModule,
     BrowserModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    HttpClientModule,
+    RouterModule
   ],
   providers: [],
   // test man hinh chinh o day, comment cac component lai
