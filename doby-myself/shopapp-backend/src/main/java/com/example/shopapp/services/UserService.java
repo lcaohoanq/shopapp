@@ -66,7 +66,7 @@ public class UserService implements IUserService {
     public String login(String phoneNumber, String password) throws Exception {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(phoneNumber);
         if(optionalUser.isEmpty()){
-            throw new DataNotFoundException("User not found");
+            throw new DataNotFoundException("Wrong phone number or password");
         }
         User existingUser = optionalUser.get();
         if(existingUser.getFacebookAccountId() == 0 && existingUser.getGoogleAccountId() == 0){

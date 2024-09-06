@@ -2,10 +2,15 @@ package com.example.shopapp.controllers;
 
 import com.example.shopapp.dtos.CategoryDTO;
 import com.example.shopapp.models.Category;
+import com.example.shopapp.responses.UpdateCategoryResponse;
 import com.example.shopapp.services.CategoryService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Locale;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -18,13 +23,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.LocaleResolver;
 
 @RestController
 @RequestMapping("${api.prefix}/categories")
+@RequiredArgsConstructor
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+
+    private final CategoryService categoryService;
+    private final MessageSource messageSource;
+    private final LocaleResolver localResolver;
 
     @PostMapping("")
     public ResponseEntity<?>  createCategory(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result) {
@@ -61,12 +70,16 @@ public class CategoryController {
     path: localhost:8080/api/v1/categories/5
     */
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateCategory(
+    public ResponseEntity<UpdateCategoryResponse> updateCategory(
             @PathVariable Long id,
-            @Valid @RequestBody  CategoryDTO categoryDTO
+            @Valid @RequestBody  CategoryDTO categoryDTO,
+            HttpServletRequest request
     ) {
+        Locale locale = localResolver.resolveLocale(request);
         categoryService.updateCategory(id, categoryDTO);
-        return ResponseEntity.ok("Update category success: " + id);
+        return ResponseEntity.ok(UpdateCategoryResponse.builder()
+                                     .message(messageSource.getMessage("category.update_category.update_successfully", null, locale))
+                                     .build());
     }
 
     @DeleteMapping("/{id}")
