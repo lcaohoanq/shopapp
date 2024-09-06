@@ -4,7 +4,7 @@ import {NgForm} from "@angular/forms";
 import {HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {UserService} from "../service/user.service";
-import {RegisterDTO} from "../dtos/register.dto";
+import {RegisterDTO} from "../dtos/user/register.dto";
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,7 @@ export class RegisterComponent implements AfterViewInit {
   @ViewChild('registerForm') registerForm!: NgForm;
 
   //Khai bao cac bien tuong ung voi cac truong trong form dang ky
-  phone: string;
+  phoneNumber: string;
   password: string;
   retypePassword: string;
   address: string;
@@ -26,7 +26,7 @@ export class RegisterComponent implements AfterViewInit {
   dob: Date;
 
   constructor(private router: Router, private userService: UserService) {
-    this.phone = '';
+    this.phoneNumber = '';
     this.password = '';
     this.retypePassword = '';
     this.address = '';
@@ -36,8 +36,8 @@ export class RegisterComponent implements AfterViewInit {
     this.dob.setFullYear(this.dob.getFullYear() - 18); // Mac dinh ngay sinh la 18 tuoi
   }
 
-  onPhoneChange() {
-    console.log(`Phone: ${this.phone}`);
+  onPhoneNumberChange() {
+    console.log(`Phone: ${this.phoneNumber}`);
 
     //if phone
 
@@ -45,7 +45,7 @@ export class RegisterComponent implements AfterViewInit {
 
   register() {
     const message = `
-    Phone: ${this.phone},
+    Phone: ${this.phoneNumber},
     Password: ${this.password},
     Address: ${this.address},
     Full name: ${this.fullName},
@@ -57,7 +57,7 @@ export class RegisterComponent implements AfterViewInit {
 
     const registerDTO: RegisterDTO = {
       "fullname": this.fullName,
-      "phone_number": this.phone,
+      "phone_number": this.phoneNumber,
       "address": this.address,
       "password": this.password,
       "retype_password": this.retypePassword,

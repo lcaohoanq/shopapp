@@ -36,12 +36,11 @@ import {RouterModule} from "@angular/router";
   providers: [],
   // test man hinh chinh o day, comment cac component lai
   bootstrap: [
-    //HomeComponent
-    //OrderComponent
-    //OrderCofirmComponent
-    RegisterComponent
-    //LoginComponent
-
+    // HomeComponent,
+    // OrderComponent,
+    // OrderCofirmComponent,
+    // RegisterComponent,
+    LoginComponent
     // DetailProductComponent
   ]
 })
