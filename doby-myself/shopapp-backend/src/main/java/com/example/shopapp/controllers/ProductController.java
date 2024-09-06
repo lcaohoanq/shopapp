@@ -1,5 +1,6 @@
 package com.example.shopapp.controllers;
 
+import com.example.shopapp.components.LocalizationUtils;
 import com.example.shopapp.constants.ErrorMessage;
 import com.example.shopapp.dtos.ProductDTO;
 import com.example.shopapp.dtos.ProductImageDTO;
@@ -47,6 +48,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductController {
 
     private final IProductService productService;
+    private final LocalizationUtils localizationUtils;
 
     @PostMapping(value = "")
     public ResponseEntity<?> createProduct(

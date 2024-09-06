@@ -1,5 +1,6 @@
 package com.example.shopapp.controllers;
 
+import com.example.shopapp.components.LocalizationUtils;
 import com.example.shopapp.dtos.OrderDTO;
 import com.example.shopapp.models.Order;
 import com.example.shopapp.services.IOrderService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final IOrderService orderService;
+    private final LocalizationUtils localizationUtils;
 
     @PostMapping("")
     public ResponseEntity<?> createOder(

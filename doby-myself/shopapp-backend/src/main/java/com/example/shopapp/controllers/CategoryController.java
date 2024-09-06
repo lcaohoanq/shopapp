@@ -1,5 +1,6 @@
 package com.example.shopapp.controllers;
 
+import com.example.shopapp.components.LocalizationUtils;
 import com.example.shopapp.dtos.CategoryDTO;
 import com.example.shopapp.models.Category;
 import com.example.shopapp.responses.UpdateCategoryResponse;
@@ -30,10 +31,8 @@ import org.springframework.web.servlet.LocaleResolver;
 @RequiredArgsConstructor
 public class CategoryController {
 
-
     private final CategoryService categoryService;
-    private final MessageSource messageSource;
-    private final LocaleResolver localResolver;
+    private final LocalizationUtils localizationUtils;
 
     @PostMapping("")
     public ResponseEntity<?>  createCategory(@RequestBody @Valid CategoryDTO categoryDTO, BindingResult result) {
@@ -72,13 +71,11 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<UpdateCategoryResponse> updateCategory(
             @PathVariable Long id,
-            @Valid @RequestBody  CategoryDTO categoryDTO,
-            HttpServletRequest request
+            @Valid @RequestBody  CategoryDTO categoryDTO
     ) {
-        Locale locale = localResolver.resolveLocale(request);
         categoryService.updateCategory(id, categoryDTO);
         return ResponseEntity.ok(UpdateCategoryResponse.builder()
-                                     .message(messageSource.getMessage("category.update_category.update_successfully", null, locale))
+                                     .message(localizationUtils.getLocalizedMessage("category.update_category.update_successfully"))
                                      .build());
     }
 

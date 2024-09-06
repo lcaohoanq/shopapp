@@ -1,5 +1,6 @@
 package com.example.shopapp.controllers;
 
+import com.example.shopapp.components.LocalizationUtils;
 import com.example.shopapp.dtos.OrderDetailDTO;
 import com.example.shopapp.models.OrderDetail;
 import com.example.shopapp.responses.OrderDetailResponse;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderDetailController {
 
     private final IOrderDetailService orderDetailService;
+    private final LocalizationUtils localizationUtils;
 
     @PostMapping("")
     public ResponseEntity<?> createOrderDetail(
