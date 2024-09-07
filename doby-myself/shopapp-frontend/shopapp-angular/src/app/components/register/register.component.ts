@@ -3,8 +3,8 @@ import {NgForm} from "@angular/forms";
 //dung de goi request
 import {HttpHeaders} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {UserService} from "../service/user.service";
-import {RegisterDTO} from "../dtos/user/register.dto";
+import {UserService} from "../../service/user.service";
+import {RegisterDTO} from "../../dtos/user/register.dto";
 
 @Component({
   selector: 'app-register',
